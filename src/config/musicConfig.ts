@@ -50,7 +50,7 @@ export const musicPlayerConfig: MusicPlayerConfig = {
 			{
 				name: "鱼仔",
 				artist: "卢广仲",
-				url: "/assets/music/鱼仔.mp3",
+				url: "/assets/music/卢广仲 - 鱼仔.mp3",
 				cover: "/assets/music/cover/80344cb971754ed93f5a1b9dcca10c9f.webp",
 				lrc: "",
 			},
