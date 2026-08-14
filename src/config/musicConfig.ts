@@ -57,9 +57,9 @@ export const musicPlayerConfig: MusicPlayerConfig = {
 			{
 				name: "归期",
 				artist: "钱润玉",
-				url: "/assets/music/钱润玉-归期.mp3",
+				url: "/assets/music/钱润玉 - 归期.mp3",
 				cover: "/assets/music/cover/1534831387651.webp",
-				lrc: "/assets/music/lrc/钱润玉-归期.lrc",
+				lrc: "/assets/music/lrc/钱润玉 - 归期.lrc",
 			},
 		],
 	},
