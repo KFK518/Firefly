@@ -54,6 +54,13 @@ export const musicPlayerConfig: MusicPlayerConfig = {
 				cover: "/assets/music/cover/80344cb971754ed93f5a1b9dcca10c9f.webp",
 				lrc: "/assets/music/lrc/卢广仲 - 鱼仔.lrc",
 			},
+			{
+				name: "归期",
+				artist: "钱润玉",
+				url: "/assets/music/钱润玉-归期.mp3",
+				cover: "/assets/music/cover/1534831387651.webp",
+				lrc: "/assets/music/lrc/钱润玉-归期.lrc",
+			},
 		],
 	},
 };
