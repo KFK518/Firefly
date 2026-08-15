@@ -75,6 +75,13 @@ export const musicPlayerConfig: MusicPlayerConfig = {
 				cover: "/assets/music/cover/d48704ec25f4f565ce836c8c0ff830d2.webp",
 				lrc: "/assets/music/lrc/周杰伦 - 七里香 .lrc",
 			},
+			{
+				name: "读心术",
+				artist: "卓文萱",
+				url: "/assets/music/卓文萱 - 读心术.mp3",
+				cover: "/assets/music/cover/77d95b7e3cdf891cbcc3c182999e4e9c.webp",
+				lrc: "/assets/music/lrc/卓文萱 - 读心术.lrc",
+			},
 		],
 	},
 };
