@@ -116,7 +116,7 @@ const shouldRenderGradient =
 // 检查是否为首页
 const isHomePageCheck = isHomePage(Astro.url.pathname);
 
-const shouldRenderCategoryBar = !!siteConfig.categoryBar;
+const shouldRenderCategoryBar = !!siteConfig.categoryBar && !isHomePageCheck;
 
 // 检查是否在文章详情页
 const isPostPage = !!postSlug;
