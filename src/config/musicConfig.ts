@@ -68,6 +68,13 @@ export const musicPlayerConfig: MusicPlayerConfig = {
 				cover: "/assets/music/cover/5ca13849dc0846782e362d12aed6543c.webp",
 				lrc: "/assets/music/lrc/卢广仲 - 100种生活.lrc",
 			},
+			{
+				name: "七里香",
+				artist: "周杰伦",
+				url: "/assets/music/周杰伦 - 七里香.mp3",
+				cover: "/assets/music/cover/d48704ec25f4f565ce836c8c0ff830d2.webp",
+				lrc: "/assets/music/lrc/周杰伦 - 七里香.lrc",
+			},
 		],
 	},
 };
