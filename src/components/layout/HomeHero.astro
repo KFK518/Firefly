@@ -1,0 +1,140 @@
+---
+import { Icon } from "astro-icon/components";
+import ImageWrapper from "@components/common/ImageWrapper.astro";
+import TypewriterText from "@components/features/TypewriterText.astro";
+import { homeConfig } from "@/config";
+
+const { hero } = homeConfig;
+const backgroundImage = hero.backgroundImage;
+const mobileBackground = hero.backgroundImageMobile || hero.backgroundImage;
+---
+
+<section class="home-hero" id="home-hero">
+	{backgroundImage && (
+		<img
+			class="home-hero__bg home-hero__bg--desktop"
+			src={backgroundImage}
+			alt=""
+			loading="eager"
+			decoding="async"
+		/>
+	)}
+	{mobileBackground && mobileBackground !== backgroundImage && (
+		<img
+			class="home-hero__bg home-hero__bg--mobile"
+			src={mobileBackground}
+			alt=""
+			loading="eager"
+			decoding="async"
+		/>
+	)}
+	{backgroundImage && <div class="home-hero__shade" aria-hidden="true"></div>}
+
+	<header class="home-hero__identity">
+		{homeConfig.avatar && (
+			<ImageWrapper
+				src={homeConfig.avatar}
+				alt={homeConfig.displayName || homeConfig.name}
+				class="home-hero__avatar"
+				widths={[160]}
+				sizes="160px"
+				loading="eager"
+				fetchpriority="high"
+			/>
+		)}
+		<h1 class="home-hero__title">
+			{homeConfig.displayName || homeConfig.name}
+			<span class="sr-only"> 的技术博客</span>
+		</h1>
+		{homeConfig.occupation && (
+			<p class="home-hero__occupation">{homeConfig.occupation}</p>
+		)}
+		{homeConfig.bio.length > 0 && (
+			<TypewriterText text={homeConfig.bio} class="home-hero__bio" />
+		)}
+	</header>
+
+	{hero.quickActions.length > 0 && (
+		<div class="home-hero__actions">
+			{hero.quickActions.map((action) => (
+				<a class="home-hero__action" href={action.href}>
+					<Icon name={action.icon} is:inline />
+					<span>{action.label}</span>
+				</a>
+			))}
+		</div>
+	)}
+
+	{homeConfig.links.length > 0 && (
+		<div class="home-hero__links">
+			{homeConfig.links.map((link) => (
+				<a
+					href={link.url}
+					aria-label={link.name}
+					title={link.name}
+					class="home-hero__link"
+				>
+					<Icon name={link.icon} is:inline />
+					{link.showName && <span>{link.name}</span>}
+				</a>
+			))}
+		</div>
+	)}
+
+	{homeConfig.skills.length > 0 && (
+		<div class="home-hero__skills" aria-label="技能">
+			{homeConfig.skills.map((skill) => (
+				<span class="home-hero__skill" title={skill.name}>
+					<Icon name={skill.icon} is:inline />
+					<span>{skill.name}</span>
+				</span>
+			))}
+		</div>
+	)}
+
+	<button
+		type="button"
+		class="home-hero__scroll"
+		data-hero-scroll
+		aria-label="向下滚动"
+	>
+		<Icon name="material-symbols:keyboard-arrow-down-rounded" is:inline />
+	</button>
+</section>
+
+<script>
+	function initHeroScroll() {
+		const scrollBtn = document.querySelector<HTMLElement>("[data-hero-scroll]");
+		if (!scrollBtn) return;
+		const target = document.getElementById("home-data-layer");
+		const onClick = () => {
+			target?.scrollIntoView({ behavior: "smooth" });
+		};
+		const onScroll = () => {
+			scrollBtn.classList.toggle(
+				"is-hidden",
+				window.scrollY > window.innerHeight * 0.5,
+			);
+		};
+		scrollBtn.addEventListener("click", onClick);
+		window.addEventListener("scroll", onScroll, { passive: true });
+		onScroll();
+		return () => {
+			scrollBtn.removeEventListener("click", onClick);
+			window.removeEventListener("scroll", onScroll);
+		};
+	}
+
+	let cleanupHeroScroll: (() => void) | null = null;
+	function bootHeroScroll() {
+		cleanupHeroScroll?.();
+		cleanupHeroScroll = initHeroScroll();
+	}
+
+	bootHeroScroll();
+	document.addEventListener("astro:page-load", bootHeroScroll);
+	document.addEventListener("swup:willReplaceContent", () => {
+		cleanupHeroScroll?.();
+		cleanupHeroScroll = null;
+	});
+</script>

@@ -13,13 +13,15 @@ const { currentPostCategory } = Astro.props as Props;
 
 const categories = await getCategoryList();
 const totalPosts = (await getSortedPostsList()).length;
-const homeUrl = url("/");
 const archiveUrl = url("/archive/");
 
 // 服务端计算初始高亮 pill（首屏无需等 JS）。
 // 查询串筛选（?category=/?tag=/?uncategorized）在静态页构建期不可知，
 // 交由客户端脚本在加载/导航时同步；此处只处理路径可确定的情况。
 const pathname = Astro.url.pathname.replace(/\/$/, "");
+// 在列表页 /list/ 上，“全部”按钮指向列表本身；其他页面仍指向主页
+const isListPage = pathname.startsWith("/list");
+const homeUrl = url(isListPage ? "/list/" : "/");
 const homePath = homeUrl.replace(/\/$/, "");
 const archivePath = archiveUrl.replace(/\/$/, "");
 const isHome = pathname === homePath || pathname === "" || pathname === "/";

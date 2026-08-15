@@ -33,5 +33,17 @@
   "src:content/posts/images/1.avif": "b5b0b3bcb6bbe0e0df",
   "src:content/posts/guide/cover.avif": "c8bca9dde6d2babfb5",
   "src:assets/images/logo/firefly-light.png": "000000000000000000",
-  "src:assets/images/logo/firefly-dark.png": "ffffffffffffffffff"
+  "src:assets/images/logo/firefly-dark.png": "ffffffffffffffffff",
+  "public:assets/images/home/home.webp": "73767977787b585a5c",
+  "public:assets/images/home/home-mobile.webp": "676565777577414346",
+  "public:assets/images/home/home-data-2.webp": "87786f5d4b4c503b39",
+  "public:assets/images/home/home-data-1.webp": "776c71524b53523b43",
+  "public:assets/images/panels/d6.webp": "d5e1e79ba6acbdaab1",
+  "public:assets/images/panels/d5.webp": "e2dce1ded8dfd6c7cb",
+  "public:assets/images/panels/d4.webp": "727a91b3a5b9e1b5c1",
+  "public:assets/images/panels/d3.webp": "436790617a9b99abc5",
+  "public:assets/images/panels/d2.webp": "b49eb47a8091cba4b7",
+  "public:assets/images/panels/d1.webp": "8a9cb59aa6b9e1d4db",
+  "public:assets/images/home/home2.webp": "92795d846e5675553d",
+  "public:assets/images/home/home-data-3.webp": "4d413160513d766349"
 }

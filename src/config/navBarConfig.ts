@@ -22,6 +22,9 @@ const getDynamicNavBarConfig = (): NavBarConfig => {
 		url: "#",
 		icon: "material-symbols:article",
 		children: [
+			// 文章列表
+			LinkPresets.PostList,
+
 			// 归档
 			LinkPresets.Archive,
 
@@ -146,6 +149,11 @@ export const LinkPresets: Record<string, NavBarLink> = {
 		name: "主页",
 		url: "/",
 		icon: "material-symbols:home",
+	},
+	PostList: {
+		name: "文章列表",
+		url: "/list/",
+		icon: "material-symbols:list-alt-outline-rounded",
 	},
 	Dynamic: {
 		name: "动态",

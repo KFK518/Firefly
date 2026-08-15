@@ -1,0 +1,288 @@
+/* ===== 首页首屏 ===== */
+.home-hero {
+	position: relative;
+	width: 100%;
+	min-height: calc(100svh - 5rem);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 1.25rem;
+	padding: 4.5rem 1.5rem 3rem;
+	text-align: center;
+	overflow: hidden;
+	background: var(--page-bg);
+	color: var(--deep-text);
+}
+
+.home-hero__bg {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.home-hero__bg--mobile {
+	display: none;
+}
+
+@media (max-width: 767px) {
+	.home-hero__bg--desktop {
+		display: none;
+	}
+	.home-hero__bg--mobile {
+		display: block;
+	}
+}
+
+.home-hero__shade {
+	position: absolute;
+	inset: 0;
+	background: color-mix(in oklab, var(--page-bg) 68%, transparent);
+}
+
+.home-hero__identity,
+.home-hero__actions,
+.home-hero__links,
+.home-hero__skills {
+	position: relative;
+	z-index: 1;
+}
+
+.home-hero__avatar {
+	width: 7rem;
+	height: 7rem;
+	border-radius: 9999px;
+	object-fit: cover;
+	margin: 0 auto 0.75rem;
+	box-shadow:
+		0 0 0 3px var(--primary),
+		0 0.5rem 1.5rem rgb(0 0 0 / 0.15);
+}
+
+.home-hero__title {
+	font-size: clamp(2rem, 6vw, 3.25rem);
+	font-weight: 800;
+	letter-spacing: 0.02em;
+	margin: 0;
+	line-height: 1.15;
+}
+
+.home-hero__occupation {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.45rem;
+	margin: 0.5rem 0 0;
+	padding: 0.35rem 0.9rem;
+	border-radius: 9999px;
+	border: 1px solid color-mix(in oklab, var(--primary) 45%, transparent);
+	background: color-mix(in oklab, var(--primary) 10%, transparent);
+	font-size: 0.9rem;
+	font-weight: 600;
+	color: var(--primary);
+}
+
+.home-hero__occupation::before {
+	content: "";
+	width: 0.45rem;
+	height: 0.45rem;
+	border-radius: 9999px;
+	background: var(--primary);
+}
+
+.home-hero__bio {
+	max-width: 36rem;
+	margin: 0.5rem auto 0;
+	font-size: 0.95rem;
+	color: var(--content-meta);
+	min-height: 1.6em;
+	display: inline-block;
+}
+
+.home-hero__actions {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 0.75rem;
+}
+
+.home-hero__action {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+	padding: 0.65rem 1.25rem;
+	border-radius: 9999px;
+	background: var(--primary);
+	color: #fff;
+	font-size: 0.95rem;
+	font-weight: 700;
+	transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.home-hero__action:hover {
+	transform: translateY(-2px);
+	opacity: 0.9;
+}
+
+:root.dark .home-hero__action {
+	color: #000;
+}
+
+.home-hero__links {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 1.25rem;
+}
+
+.home-hero__link {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.35rem;
+	font-size: 1.2rem;
+	color: var(--content-meta);
+	transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.home-hero__link:hover {
+	color: var(--primary);
+	transform: translateY(-2px);
+}
+
+/* ===== 技能图标条 ===== */
+.home-hero__skills {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 0.5rem;
+	max-width: 40rem;
+}
+
+.home-hero__skill {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.35rem;
+	padding: 0.3rem 0.75rem;
+	border-radius: 9999px;
+	border: 1px solid var(--line-divider);
+	background: color-mix(in oklab, var(--card-bg) 80%, transparent);
+	font-size: 0.8rem;
+	color: var(--deep-text);
+	transition:
+		border-color 0.2s ease,
+		color 0.2s ease,
+		transform 0.2s ease;
+}
+
+.home-hero__skill:hover {
+	border-color: var(--primary);
+	color: var(--primary);
+	transform: translateY(-2px);
+}
+
+/* ===== 向下滚动提示 ===== */
+.home-hero__scroll {
+	position: relative;
+	z-index: 1;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 2.5rem;
+	height: 2.5rem;
+	margin-top: 0.75rem;
+	border-radius: 9999px;
+	font-size: 1.5rem;
+	color: var(--content-meta);
+	transition:
+		color 0.2s ease,
+		opacity 0.4s ease;
+	animation: home-hero-bounce 2s ease-in-out infinite;
+}
+
+.home-hero__scroll:hover {
+	color: var(--primary);
+}
+
+.home-hero__scroll.is-hidden {
+	opacity: 0;
+	pointer-events: none;
+}
+
+@keyframes home-hero-bounce {
+	0%,
+	100% {
+		transform: translateY(0);
+	}
+	50% {
+		transform: translateY(6px);
+	}
+}
+
+/* ===== 首屏入场动画 ===== */
+@media (prefers-reduced-motion: no-preference) {
+	.home-hero__avatar,
+	.home-hero__title,
+	.home-hero__occupation,
+	.home-hero__bio,
+	.home-hero__actions,
+	.home-hero__links,
+	.home-hero__skills {
+		opacity: 0;
+		animation: home-hero-rise 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+	}
+	.home-hero__avatar {
+		animation-name: home-hero-pop;
+	}
+	.home-hero__title {
+		animation-delay: 0.08s;
+	}
+	.home-hero__occupation {
+		animation-delay: 0.16s;
+	}
+	.home-hero__bio {
+		animation-delay: 0.24s;
+	}
+	.home-hero__actions {
+		animation-delay: 0.34s;
+	}
+	.home-hero__links {
+		animation-delay: 0.44s;
+	}
+	.home-hero__skills {
+		animation-delay: 0.52s;
+	}
+	.home-hero__scroll {
+		animation:
+			home-hero-rise 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.55s forwards,
+			home-hero-bounce 2s ease-in-out 1.2s infinite;
+	}
+}
+
+@keyframes home-hero-rise {
+	from {
+		opacity: 0;
+		transform: translateY(18px);
+	}
+	to {
+		opacity: 1;
+		transform: none;
+	}
+}
+
+@keyframes home-hero-pop {
+	from {
+		opacity: 0;
+		transform: scale(0.85);
+	}
+	to {
+		opacity: 1;
+		transform: scale(1);
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.home-hero__scroll {
+		animation: none;
+	}
+}

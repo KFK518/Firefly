@@ -1,0 +1,566 @@
+/* ===== 数据卡片 ===== */
+.home-data-layer {
+	display: flex;
+	align-items: stretch;
+	padding: 2rem 0 3rem;
+}
+
+@media (min-width: 768px) {
+	.home-data-layer {
+		/* 下半部分页面高度约为全屏的 75%-85% */
+		min-height: 80svh;
+	}
+}
+
+.home-data-layer__inner {
+	width: 100%;
+	max-width: 72rem;
+	margin: 0 auto;
+	display: flex;
+	flex-direction: column;
+}
+
+.home-data-layer__title {
+	/* 左上角标题：大一点但不突兀，字号随布局缩放 */
+	text-align: left;
+	margin: 0 0 1rem;
+	font-size: clamp(1.5rem, 2.6vw, 2.1rem);
+	font-weight: 800;
+	letter-spacing: 0.04em;
+	flex-shrink: 0;
+}
+
+/* ===== 等高长方形框 ===== */
+.home-panels {
+	flex: 1;
+	display: grid;
+	grid-template-rows: none;
+	grid-auto-rows: minmax(9rem, auto);
+	gap: 0.75rem;
+	min-height: 0;
+}
+
+@media (min-width: 768px) {
+	.home-panels {
+		/* 4-5 个框从上到下等分，高度相同 */
+		grid-template-rows: repeat(5, 1fr);
+		grid-auto-rows: unset;
+	}
+}
+
+.home-panel {
+	display: flex;
+	align-items: stretch;
+	min-height: 0;
+	padding: 0.5rem 0.75rem;
+	border: 1px solid var(--line-divider);
+	border-radius: var(--radius-2xl);
+	background: var(--card-bg);
+	overflow: hidden;
+	transition:
+		transform 0.25s ease,
+		box-shadow 0.25s ease;
+}
+
+@media (hover: hover) {
+	.home-panel:hover {
+		transform: translateY(-2px);
+		box-shadow: 0 0.6rem 1.5rem rgb(0 0 0 / 0.08);
+	}
+}
+
+.home-panel--split {
+	padding: 0;
+}
+
+.home-panel--latest,
+.home-panel--contact {
+	/* 背景图铺满整个框：去掉框内边距，让图片延伸到边缘 */
+	padding: 0;
+}
+
+.home-panel--split > * {
+	flex: 1;
+	min-width: 0;
+	min-height: 0;
+}
+
+.home-panel--split > * + * {
+	border-left: 1px solid var(--line-divider);
+}
+
+@media (max-width: 767px) {
+	.home-panel--split {
+		flex-direction: column;
+	}
+	.home-panel--split > * + * {
+		border-left: none;
+		border-top: 1px solid var(--line-divider);
+	}
+}
+
+/* 框内的卡片去掉外框，只保留内容排版 */
+.home-panel .guide-card {
+	height: 100%;
+	flex: 1;
+	min-height: 0;
+	padding: 0.5rem 0.75rem;
+	border: none;
+	border-radius: 0;
+	background: transparent;
+}
+
+.home-panel .data-card {
+	height: 100%;
+	min-height: 0;
+	padding: 1rem 1.25rem;
+	border: none;
+	border-radius: 0;
+	background: transparent;
+}
+
+.home-panel .data-card:hover {
+	transform: none;
+	box-shadow: none;
+}
+
+.home-panel .data-card__hover {
+	padding: 0.75rem 1rem;
+}
+
+.home-panel .data-card__hover-title {
+	font-size: 1.15rem;
+}
+
+.home-panel .guide-card h3 {
+	margin: 0 0 0.5rem;
+	font-size: 0.95rem;
+}
+
+.home-panel .guide-rotator__desc {
+	-webkit-line-clamp: 1;
+	line-clamp: 1;
+	font-size: 0.8rem;
+}
+
+.home-panel .guide-rotator__dots {
+	margin-top: 0.4rem;
+}
+
+.home-panel .guide-link-list a,
+.home-panel .guide-tag-list a {
+	padding: 0.3rem 0;
+	font-size: 0.85rem;
+}
+
+.data-card {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
+	height: 100%;
+	min-height: 12rem;
+	padding: 1.5rem;
+	border: 1px solid var(--line-divider);
+	border-radius: var(--radius-2xl);
+	background: var(--card-bg);
+	overflow: hidden;
+	transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.data-card:hover {
+	transform: translateY(-4px);
+	box-shadow: 0 1rem 2rem rgb(0 0 0 / 0.12);
+}
+
+.data-card__visual {
+	position: absolute;
+	inset: 0;
+	opacity: 0.45;
+}
+
+.data-card__visual--image {
+	opacity: 0.7;
+}
+
+.data-card__visual-img,
+.data-card__svg {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.data-card__svg-path {
+	fill: none;
+	stroke: var(--primary);
+	stroke-width: 3;
+	opacity: 0.5;
+}
+
+.data-card__svg-dot {
+	fill: var(--primary);
+	opacity: 0.35;
+}
+
+.data-card__content {
+	position: relative;
+	z-index: 1;
+}
+
+.data-card__eyebrow {
+	margin: 0;
+	font-size: 0.75rem;
+	font-weight: 700;
+	letter-spacing: 0.2em;
+	color: var(--primary);
+}
+
+.data-card__title {
+	margin: 0.25rem 0 0.35rem;
+	font-size: 1.35rem;
+	font-weight: 800;
+}
+
+.data-card__detail {
+	margin: 0;
+	font-size: 0.9rem;
+	color: var(--content-meta);
+}
+
+.data-card__hover,
+.data-card__hover-pills {
+	position: absolute;
+	inset: 0;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	padding: 1.5rem;
+	opacity: 0;
+	pointer-events: none;
+	transition: opacity 0.25s ease;
+}
+
+.data-card__hover {
+	background: color-mix(in oklab, var(--card-bg) 90%, transparent);
+	backdrop-filter: blur(2px);
+}
+
+.data-card__hover-pills {
+	justify-content: flex-end;
+	flex-direction: row;
+	flex-wrap: wrap;
+	gap: 0.5rem;
+}
+
+.data-card:hover .data-card__hover,
+.data-card:hover .data-card__hover-pills {
+	opacity: 1;
+}
+
+.data-card__hover-orb {
+	position: absolute;
+	top: -3rem;
+	right: -3rem;
+	width: 10rem;
+	height: 10rem;
+	border-radius: 9999px;
+	background: color-mix(in oklab, var(--primary) 25%, transparent);
+}
+
+.data-card__hover-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	font-size: 0.8rem;
+	color: var(--content-meta);
+}
+
+.data-card__hover-title {
+	margin: 0.5rem 0 0;
+	font-size: 1.5rem;
+	font-weight: 800;
+}
+
+.data-card__hover-title span {
+	color: var(--primary);
+}
+
+.data-card__hover-pill {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.4rem;
+	padding: 0.4rem 0.8rem;
+	border-radius: 9999px;
+	font-size: 0.85rem;
+	background: var(--btn-content);
+	color: #fff;
+}
+
+.data-card__hover-pill--dark {
+	background: var(--deep-text);
+	color: var(--page-bg);
+}
+
+.data-card__hover-pill--outline {
+	background: transparent;
+	border: 1px solid var(--line-divider);
+	color: var(--deep-text);
+}
+
+.data-card__hover-pill--solid {
+	background: var(--primary);
+	color: #fff;
+}
+
+/* ===== 指南网格卡片 ===== */
+.guide-card {
+	display: flex;
+	flex-direction: column;
+	position: relative;
+	overflow: hidden;
+	height: 100%;
+	min-height: 10rem;
+	padding: 1.25rem;
+	border: 1px solid var(--line-divider);
+	border-radius: var(--radius-2xl);
+	background: var(--card-bg);
+}
+
+/* 背景图纹理层：内容保持在图片之上 */
+.guide-card > * {
+	position: relative;
+	z-index: 1;
+}
+
+.guide-card__bg {
+	position: absolute;
+	inset: 0;
+	z-index: 0;
+	opacity: 0.45;
+	overflow: hidden;
+	pointer-events: none;
+	background-size: cover;
+	background-position: center;
+}
+
+.guide-card h3 {
+	margin: 0.25rem 0 0.75rem;
+	font-size: 1.05rem;
+	font-weight: 800;
+}
+
+.guide-card__eyebrow {
+	margin: 0;
+	font-size: 0.7rem;
+	font-weight: 700;
+	letter-spacing: 0.2em;
+	color: var(--primary);
+}
+
+.guide-card__head {
+	display: flex;
+	align-items: center;
+	gap: 0.35rem;
+	font-size: 0.7rem;
+	font-weight: 700;
+	letter-spacing: 0.18em;
+	color: var(--primary);
+	text-transform: uppercase;
+}
+
+.guide-card__head svg {
+	font-size: 0.9rem;
+}
+
+.guide-card__detail {
+	color: var(--content-meta);
+	font-size: 0.9rem;
+}
+
+.guide-rotator__slides {
+	position: relative;
+	flex: 1;
+	overflow: hidden;
+}
+
+.guide-rotator__slide {
+	display: flex;
+	flex-direction: column;
+	gap: 0.35rem;
+}
+
+.guide-rotator__meta {
+	font-size: 0.8rem;
+	color: var(--content-meta);
+}
+
+.guide-rotator__title-row {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 0.5rem;
+}
+
+.guide-rotator__article-link {
+	font-size: 0.95rem;
+}
+
+.guide-rotator__article-link:hover {
+	color: var(--primary);
+}
+
+.guide-card__article-action {
+	display: inline-flex;
+	align-items: center;
+	color: var(--primary);
+	flex-shrink: 0;
+}
+
+.guide-rotator__desc {
+	font-size: 0.85rem;
+	color: var(--content-meta);
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	line-clamp: 2;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+}
+
+.guide-rotator__dots {
+	display: flex;
+	gap: 0.35rem;
+	margin-top: 0.75rem;
+}
+
+.guide-rotator__dots button {
+	width: 0.5rem;
+	height: 0.5rem;
+	padding: 0;
+	border-radius: 9999px;
+	background: var(--line-divider);
+	transition: background 0.2s ease, width 0.2s ease;
+}
+
+.guide-rotator__dots button[aria-current="true"] {
+	width: 1.1rem;
+	background: var(--primary);
+}
+
+.guide-link-list,
+.guide-tag-list {
+	display: flex;
+	flex-direction: column;
+	margin-top: 0.25rem;
+}
+
+.guide-link-list a,
+.guide-tag-list a {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 0.5rem;
+	padding: 0.45rem 0;
+	font-size: 0.9rem;
+	border-bottom: 1px dashed var(--line-divider);
+}
+
+.guide-link-list a:hover,
+.guide-tag-list a:hover {
+	color: var(--primary);
+	padding-left: 0.35rem;
+	background: color-mix(in oklab, var(--primary) 8%, transparent);
+	border-radius: 0.4rem;
+}
+
+.guide-list__count {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-width: 1.5rem;
+	padding: 0.1rem 0.45rem;
+	border-radius: 9999px;
+	font-size: 0.8rem;
+	font-weight: 700;
+	background: color-mix(in oklab, var(--primary) 12%, transparent);
+	color: var(--primary);
+}
+
+.guide-tag-list__all {
+	border-bottom: none !important;
+	color: var(--primary);
+	justify-content: flex-start !important;
+}
+
+.guide-card--contact {
+	cursor: pointer;
+}
+
+.guide-contact__primary {
+	display: flex;
+	align-items: center;
+	gap: 0.9rem;
+	margin-top: 0.5rem;
+}
+
+.guide-contact__primary a,
+.guide-contact__toggle {
+	display: inline-flex;
+	font-size: 1.35rem;
+	color: var(--deep-text);
+	transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.guide-contact__primary a:hover,
+.guide-contact__toggle:hover {
+	color: var(--primary);
+	transform: translateY(-2px);
+}
+
+.guide-contact__all {
+	display: none;
+	flex-direction: column;
+	gap: 0.5rem;
+	margin-top: 0.75rem;
+}
+
+.guide-card--contact.is-open .guide-contact__all {
+	display: flex;
+}
+
+.guide-contact__all a {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+	font-size: 0.9rem;
+}
+
+.guide-contact__all a:hover {
+	color: var(--primary);
+}
+
+/* ===== 下半部分入场动画 ===== */
+@media (prefers-reduced-motion: no-preference) {
+	.home-panels > * {
+		opacity: 0;
+		transform: translateY(24px);
+		transition:
+			opacity 0.55s ease,
+			transform 0.55s ease;
+	}
+	.home-data-layer.is-visible .home-panels > * {
+		opacity: 1;
+		transform: none;
+	}
+	.home-data-layer.is-visible .home-panels > *:nth-child(2) {
+		transition-delay: 0.05s;
+	}
+	.home-data-layer.is-visible .home-panels > *:nth-child(3) {
+		transition-delay: 0.1s;
+	}
+	.home-data-layer.is-visible .home-panels > *:nth-child(4) {
+		transition-delay: 0.15s;
+	}
+	.home-data-layer.is-visible .home-panels > *:nth-child(5) {
+		transition-delay: 0.2s;
+	}
+}

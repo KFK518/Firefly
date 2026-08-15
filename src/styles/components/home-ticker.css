@@ -1,0 +1,92 @@
+/* ===== 公告跑马灯 ===== */
+.home-ticker {
+	display: block;
+	width: 100%;
+	overflow: hidden;
+	border-block: 1px solid var(--line-divider);
+	background: var(--card-bg);
+}
+
+.home-ticker__inner {
+	overflow: hidden;
+	mask-image: linear-gradient(
+		to right,
+		transparent,
+		#000 4%,
+		#000 96%,
+		transparent
+	);
+	-webkit-mask-image: linear-gradient(
+		to right,
+		transparent,
+		#000 4%,
+		#000 96%,
+		transparent
+	);
+}
+
+.home-ticker__track {
+	display: flex;
+	width: max-content;
+}
+
+.home-ticker__group {
+	display: flex;
+	flex-shrink: 0;
+	animation: home-ticker-scroll var(--home-ticker-duration, 40s) linear infinite;
+}
+
+.home-ticker__sequence {
+	display: flex;
+	align-items: center;
+}
+
+.home-ticker__item {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.75rem;
+	padding: 0.7rem 1.25rem;
+	white-space: nowrap;
+}
+
+.home-ticker__tag {
+	padding: 0.15rem 0.6rem;
+	border-radius: 9999px;
+	background: color-mix(in oklab, var(--primary) 14%, transparent);
+	font-size: 0.75rem;
+	font-weight: 700;
+	color: var(--primary);
+}
+
+.home-ticker__text {
+	font-size: 0.95rem;
+	color: var(--deep-text);
+}
+
+.home-ticker__text:hover {
+	color: var(--primary);
+}
+
+.home-ticker__sep {
+	color: var(--content-meta);
+	opacity: 0.5;
+}
+
+@keyframes home-ticker-scroll {
+	from {
+		transform: translateX(0);
+	}
+	to {
+		transform: translateX(-100%);
+	}
+}
+
+.home-ticker:hover .home-ticker__group {
+	animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.home-ticker__group {
+		animation: none;
+	}
+}
