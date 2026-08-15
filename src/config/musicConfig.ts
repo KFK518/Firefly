@@ -82,6 +82,20 @@ export const musicPlayerConfig: MusicPlayerConfig = {
 				cover: "/assets/music/cover/77d95b7e3cdf891cbcc3c182999e4e9c.webp",
 				lrc: "/assets/music/lrc/卓文萱 - 读心术.lrc",
 			},
+			{
+				name: "旅行的意义",
+				artist: "陈绮贞",
+				url: "/assets/music/陈绮贞 - 旅行的意义.mp3",
+				cover: "/assets/music/cover/4d5982e312cd464be1cef3bd2a3eaadd.webp",
+				lrc: "/assets/music/lrc/陈绮贞 - 旅行的意义.lrc",
+			},
+			{
+				name: "When She's Gone",
+				artist: "Josh Fudge",
+				url: "/assets/music/Josh Fudge - When She's Gone.mp3",
+				cover: "/assets/music/cover/f6f6c634e1271bfbf73e83a572270eac.webp",
+				lrc: "/assets/music/lrc/Josh Fudge - When She's Gone.lrc",
+			},
 		],
 	},
 };
