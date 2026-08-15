@@ -61,6 +61,13 @@ export const musicPlayerConfig: MusicPlayerConfig = {
 				cover: "/assets/music/cover/1534831387651.webp",
 				lrc: "/assets/music/lrc/钱润玉 - 归期.lrc",
 			},
+			{
+				name: "100种生活",
+				artist: "卢广仲",
+				url: "/assets/music/卢广仲 - 100种生活.mp3",
+				cover: "/assets/music/cover/5ca13849dc0846782e362d12aed6543c.webp",
+				lrc: "/assets/music/lrc/卢广仲 - 100种生活.lrc",
+			},
 		],
 	},
 };
