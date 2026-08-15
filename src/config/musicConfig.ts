@@ -71,9 +71,9 @@ export const musicPlayerConfig: MusicPlayerConfig = {
 			{
 				name: "七里香",
 				artist: "周杰伦",
-				url: "/assets/music/周杰伦 - 七里香.mp3",
+				url: "/assets/music/周杰伦 - 七里香 .mp3",
 				cover: "/assets/music/cover/d48704ec25f4f565ce836c8c0ff830d2.webp",
-				lrc: "/assets/music/lrc/周杰伦 - 七里香.lrc",
+				lrc: "/assets/music/lrc/周杰伦 - 七里香 .lrc",
 			},
 		],
 	},
