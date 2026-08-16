@@ -2541,3 +2541,21 @@ html:has(.music-visualizer-page) #content-wrapper {
 	transition: none !important;
 	transform: scale(1) !important;
 }
+
+/* 封面渲染层隔离：translateZ(0) + backface-visibility，父容器 transform 不再连带封面重新栅格化 */
+.music-visualizer__record-cover,
+.music-visualizer__record-cover-image {
+	transform: translateZ(0);
+	backface-visibility: hidden;
+}
+
+/* 退场（page-leave）时：封面禁用所有过渡与动画，锁定 scale(1)，杜绝销毁瞬间缩放闪烁 */
+.music-visualizer-page--leaving .music-visualizer__record,
+.music-visualizer-page--leaving .music-visualizer__record-cover,
+.music-visualizer-page--leaving .music-visualizer__record-cover-image,
+.music-visualizer-page--leaving .music-visualizer__record-disc-shell,
+.music-visualizer-page--leaving .music-visualizer__record-overlay {
+	transition: none !important;
+	animation: none !important;
+	transform: scale(1) !important;
+}
