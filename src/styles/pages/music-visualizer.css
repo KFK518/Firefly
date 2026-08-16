@@ -2519,3 +2519,9 @@ html:has(.music-visualizer-page).is-leaving .music-visualizer-page,
 html:has(.music-visualizer-page).is-leaving .music-visualizer-page * {
 	visibility: hidden !important;
 }
+
+/* JS 触发：点击站内链接或前进/后退时立即隐藏可视化层 */
+.music-visualizer-page--leaving,
+.music-visualizer-page--leaving * {
+	visibility: hidden !important;
+}

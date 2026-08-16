@@ -56,8 +56,29 @@ onMount(() => {
 	};
 	document.addEventListener("click", handleFirstClick);
 
+	// 离开页面的瞬间直接隐藏可视化层：不依赖 Swup 过渡类，点击站内链接或
+	// 浏览器前进/后退（popstate）都会立即触发，杜绝封面放大/残留闪烁。
+	const hideVisualizer = () => {
+		document.querySelector(".music-visualizer-page")
+			?.classList.add("music-visualizer-page--leaving");
+	};
+	const handleNavClick = (event: MouseEvent) => {
+		const target = event.target;
+		if (!(target instanceof Element)) return;
+		const anchor = target.closest("a[href]");
+		if (!anchor || !(anchor instanceof HTMLAnchorElement)) return;
+		const href = anchor.getAttribute("href") || "";
+		if (href.startsWith("http") || href.startsWith("//")) return;
+		if (anchor.target === "_blank") return;
+		hideVisualizer();
+	};
+	document.addEventListener("click", handleNavClick);
+	window.addEventListener("popstate", hideVisualizer);
+
 	return () => {
 		document.removeEventListener("click", handleFirstClick);
+		document.removeEventListener("click", handleNavClick);
+		window.removeEventListener("popstate", hideVisualizer);
 	};
 });
 
