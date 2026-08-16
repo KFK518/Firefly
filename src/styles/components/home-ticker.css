@@ -60,7 +60,7 @@
 
 .home-ticker__text {
 	font-size: 0.95rem;
-	color: var(--deep-text);
+	color: var(--primary);
 }
 
 .home-ticker__text:hover {

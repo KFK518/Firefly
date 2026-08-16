@@ -9,15 +9,15 @@ export const announcementConfig: AnnouncementConfig = {
 		{
 			tag: "欢迎",
 			title: "欢迎来到我的博客",
-			content: "欢迎来到我的博客！这是一则示例公告。",
+			content: "欢迎新朋友的到来！",
 			time: "2026-08-15",
 			link: "/about/",
 			sort: 1,
 		},
 		{
-			tag: "友链",
+			tag: "类型",
 			title: "互换友链",
-			content: "正在招募技术类博客友链，要求原创、稳定更新。点击了解更多。",
+			content: "个人博客网站",
 			time: "2026-08-14",
 			link: "/friends/",
 			sort: 2,
@@ -25,7 +25,7 @@ export const announcementConfig: AnnouncementConfig = {
 		{
 			tag: "维护",
 			title: "公告",
-			content: "示例公告，可自行修改或增删。",
+			content: "目前网站状态正常",
 			time: "2026-08-13",
 			sort: 3,
 		},
