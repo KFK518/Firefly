@@ -33,6 +33,9 @@ function audioCtxState() {
 }
 
 onMount(() => {
+	// 清除进入页面时可能被误加的离开类：Swup 缓存页面会在点击事件冒泡期间同步挂载组件，
+	// 导致本次进入点击被 handleNavClick 误判为离开。这里保证进入后可视化层必然显示。
+	document.querySelector(".music-visualizer-page")?.classList.remove("music-visualizer-page--leaving");
 	const mgr = window.__fireflyMusic;
 	if (!mgr) {
 		const waitForMgr = () => {
