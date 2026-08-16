@@ -61,7 +61,24 @@ onMount(() => {
 
 	// 离开页面的瞬间直接隐藏可视化层：不依赖 Swup 过渡类，点击站内链接或
 	// 浏览器前进/后退（popstate）都会立即触发，杜绝封面放大/残留闪烁。
+	// 切页前中和封面/唱片的 transform 过渡，防止 DOM 销毁瞬间触发缩放闪烁
+	const neutralizeCoverTransitions = () => {
+		const selectors = [
+			".music-visualizer__record-cover",
+			".music-visualizer__record-cover-image",
+			".music-visualizer__record-disc-shell",
+			".music-visualizer__record-overlay",
+		];
+		for (const sel of selectors) {
+			for (const el of document.querySelectorAll(sel)) {
+				const s = (el as HTMLElement).style;
+				s.transition = "none";
+				s.transform = "scale(1)";
+			}
+		}
+	};
 	const hideVisualizer = () => {
+		neutralizeCoverTransitions();
 		document.querySelector(".music-visualizer-page")
 			?.classList.add("music-visualizer-page--leaving");
 	};
@@ -86,7 +103,9 @@ onMount(() => {
 });
 
 onDestroy(() => {
-	audioAnalyzer.disconnect();
+	// 销毁前同样中和封面过渡（onBeforeUnmount 思路）
+	neutralizeCoverTransitions();
+audioAnalyzer.disconnect();
 });
 </script>
 

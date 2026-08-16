@@ -2531,3 +2531,13 @@ html:has(.music-visualizer-page) #swup-container,
 html:has(.music-visualizer-page) #content-wrapper {
 	transform: none !important;
 }
+
+/* 离开音乐页时：中和封面/唱片所有 transform 过渡，杜绝销毁瞬间的缩放闪烁 */
+.music-visualizer-page--leaving .music-visualizer__record,
+.music-visualizer-page--leaving .music-visualizer__record-cover,
+.music-visualizer-page--leaving .music-visualizer__record-cover-image,
+.music-visualizer-page--leaving .music-visualizer__record-disc-shell,
+.music-visualizer-page--leaving .music-visualizer__record-overlay {
+	transition: none !important;
+	transform: scale(1) !important;
+}
