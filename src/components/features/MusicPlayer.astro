@@ -37,6 +37,10 @@ const widgetId =
                     {i18n(I18nKey.music)}
                 </h3>
             </div>
+            <!-- Top Right: Visualizer Link -->
+            <a href="/music/" class="btn-visualizer hover:text-(--primary) transition-all duration-300 p-0.5 transform active:scale-95 text-neutral-400 shrink-0 inline-flex items-center justify-center" title="音乐可视化" aria-label="音乐可视化">
+                <Icon is:inline name="material-symbols:graphic-eq-rounded" class="text-xl" aria-hidden="true" />
+            </a>
             <!-- Top Right: Lyric Toggle -->
             <button class={`btn-lrc-toggle hover:text-(--primary) transition-all duration-300 p-0.5 pr-2 transform active:scale-95 text-neutral-400 shrink-0 ${!config.showLyrics ? 'hidden' : ''}`} title={i18n(I18nKey.musicLyrics)} aria-label={i18n(I18nKey.musicLyrics)}>
                 <Icon is:inline name="material-symbols:subtitles-off-outline-rounded" class="icon-lrc-off text-xl" aria-hidden="true" />

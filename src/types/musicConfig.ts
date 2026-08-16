@@ -49,4 +49,53 @@ export type MusicPlayerConfig = {
 			lrc?: string; // 歌词内容，支持 LRC 格式
 		}>;
 	};
+
+	// 3D 可视化配置
+	visualizer?: MusicVisualizerConfig;
+};
+
+export type MusicVisualizerThemeConfig = {
+	base1: string;
+	base2: string;
+	coolCore: string;
+	coolEdge: string;
+	warmCore: string;
+	warmEdge: string;
+	rippleColor: string;
+	/** 冷色波纹锚点（安静/低频时）。缺省回退到 rippleColor */
+	rippleCool?: string;
+	/** 暖色波纹锚点（明亮/高频时）。缺省回退到 warmEdge */
+	rippleWarm?: string;
+	fogColor: string;
+	glowIntensity: number;
+};
+
+export type MusicVisualizerHeightConfig = {
+	idle: number;
+	subBass: number;
+	bass: number;
+	lowMid: number;
+	mid: number;
+	highMid: number;
+	energy: number;
+	ripple: number;
+	rippleAccent: number;
+};
+
+export type MusicVisualizerConfig = {
+	background?: {
+		dark: string;
+		light: string;
+	};
+	camera?: {
+		position?: {
+			x: number;
+			y: number;
+			z: number;
+		};
+	};
+	autoRotate?: boolean;
+	autoRotateSpeed?: number;
+	height?: MusicVisualizerHeightConfig;
+	theme?: MusicVisualizerThemeConfig;
 };

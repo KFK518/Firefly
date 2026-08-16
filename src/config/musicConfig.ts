@@ -98,4 +98,45 @@ export const musicPlayerConfig: MusicPlayerConfig = {
 			},
 		],
 	},
+
+	// 3D 可视化配置
+	visualizer: {
+		background: {
+			dark: "#000000",
+			light: "#000000",
+		},
+		camera: {
+			position: {
+				x: 0,
+				y: 32,
+				z: 52,
+			},
+		},
+		autoRotate: true,
+		autoRotateSpeed: 0.3,
+		height: {
+			idle: 0.6,
+			subBass: 4.0,
+			bass: 3.0,
+			lowMid: 2.0,
+			mid: 2.5,
+			highMid: 2.0,
+			energy: 4.0,
+			ripple: 3.0,
+			rippleAccent: 1.0,
+		},
+		theme: {
+			base1: "#000000",
+			base2: "#000000",
+			coolCore: "#16b8c9",
+			coolEdge: "#69dce7",
+			warmCore: "#8be8ee",
+			warmEdge: "#d9ffff",
+			rippleColor: "#3bcbd9",
+			rippleCool: "#3bcbd9",
+			rippleWarm: "#d9ffff",
+			fogColor: "#050810",
+			glowIntensity: 0.86,
+		},
+	},
 };

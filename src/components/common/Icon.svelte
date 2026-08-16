@@ -24,9 +24,21 @@ interface Props {
 	icon: string;
 	class?: string;
 	style?: string;
+	size?: "xs" | "sm" | "md" | "lg" | "xl" | "2xl";
 }
 
-let { icon, class: className = "", style = "" }: Props = $props();
+let { icon, class: className = "", style = "", size = "" }: Props = $props();
+
+// 尺寸映射（与大图标组件保持一致）
+const sizeClasses: Record<string, string> = {
+	xs: "text-xs",
+	sm: "text-sm",
+	md: "text-base",
+	lg: "text-lg",
+	xl: "text-xl",
+	"2xl": "text-2xl",
+};
+const sizeClass = $derived(sizeClasses[size] || "");
 
 // 检测图标是否存在
 const iconExists = $derived(() => {
@@ -42,12 +54,12 @@ const iconExists = $derived(() => {
 {#if iconExists()}
 	<Iconify
 		{icon}
-		class="inline-icon inline-flex items-center justify-center {className}"
+		class="inline-icon inline-flex items-center justify-center {sizeClass} {className}"
 		style={style}
 	/>
 {:else}
 	<span
-		class="inline-icon inline-flex items-center justify-center {className}"
+		class="inline-icon inline-flex items-center justify-center {sizeClass} {className}"
 		style={style}
 		aria-hidden="true"
 		title="Icon not found: {icon}"

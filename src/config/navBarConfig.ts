@@ -73,6 +73,7 @@ const getDynamicNavBarConfig = (): NavBarConfig => {
 
 			// 书签导航
 			LinkPresets.Booknav,
+			LinkPresets.Music,
 		],
 	});
 
@@ -228,6 +229,11 @@ export const LinkPresets: Record<string, NavBarLink> = {
 		url: "/booknav/",
 		icon: "material-symbols:bookmarks",
 		pageKey: "booknav",
+	},
+	Music: {
+		name: "音乐可视化",
+		url: "/music/",
+		icon: "material-symbols:graphic-eq",
 	},
 };
 
