@@ -12,10 +12,10 @@ export const homeConfig: HomeConfig = {
 	displayName: profileConfig.name,
 
 	// 职业/身份标签
-	occupation: "技术博主 / 全栈爱好者",
+	occupation: "云深遇归期/月下赴山河",
 
 	// 个人签名（首条显示在首屏）
-	bio: [profileConfig.bio || "Hello, I'm Firefly."],
+	bio: [profileConfig.bio || "Hello, I'm a whale."],
 
 	hero: {
 		// 首屏背景图（可选；留空则使用纯色背景）
