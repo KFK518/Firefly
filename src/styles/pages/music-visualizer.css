@@ -2506,3 +2506,13 @@ html:has(.music-visualizer-page) .footer {
 html:has(.music-visualizer-page) #top-row {
 	display: none;
 }
+
+/* 切换页面时：音乐可视化页容器保持静止，防止过渡 transform/合成导致封面放大闪烁 */
+html:has(.music-visualizer-page).is-animating #swup-container,
+html:has(.music-visualizer-page).is-leaving #swup-container,
+html:has(.music-visualizer-page).is-rendering #swup-container {
+	transform: none !important;
+	opacity: 1 !important;
+	filter: none !important;
+	animation: none !important;
+}
