@@ -86,7 +86,7 @@ const navbarPanelBlur = Math.max(
 );
 
 let pageTitle: string;
-if (title) {
+if (title && title !== siteConfig.title) {
 	pageTitle = `${title} - ${siteConfig.title}`;
 } else {
 	pageTitle = siteConfig.subtitle
