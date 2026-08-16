@@ -9,7 +9,7 @@ export const siteConfig: SiteConfig = {
 	title: "MistField",
 
 	// 站点副标题
-	subtitle: "Wander and Note",
+	subtitle: "wander",
 
 	// 站点 URL
 	site_url: "https://mistfield.cuteleaf.cn",
