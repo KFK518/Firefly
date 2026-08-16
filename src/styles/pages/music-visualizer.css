@@ -2513,3 +2513,9 @@ html:has(.music-visualizer-page).is-rendering #swup-container {
 	filter: none !important;
 	animation: none !important;
 }
+
+/* 离开音乐页的瞬间直接隐藏可视化层，杜绝任何合成/过渡导致的封面放大残留 */
+html:has(.music-visualizer-page).is-leaving .music-visualizer-page,
+html:has(.music-visualizer-page).is-leaving .music-visualizer-page * {
+	visibility: hidden !important;
+}
