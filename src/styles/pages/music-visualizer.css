@@ -2525,3 +2525,9 @@ html:has(.music-visualizer-page).is-leaving .music-visualizer-page * {
 .music-visualizer-page--leaving * {
 	visibility: hidden !important;
 }
+
+/* 方案A：音乐可视化页容器在页面切换时不做 transform（不依赖 Swup 状态类），避免 fixed 层被合成放大 */
+html:has(.music-visualizer-page) #swup-container,
+html:has(.music-visualizer-page) #content-wrapper {
+	transform: none !important;
+}
