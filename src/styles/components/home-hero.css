@@ -2,7 +2,7 @@
 .home-hero {
 	position: relative;
 	width: 100%;
-	min-height: calc(100svh - 5rem);
+	min-height: 100svh;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -40,6 +40,21 @@
 	position: absolute;
 	inset: 0;
 	background: color-mix(in oklab, var(--page-bg) 68%, transparent);
+}
+:root:not(.dark) .home-hero__shade {
+	background: color-mix(in oklab, var(--page-bg) 25%, transparent);
+}
+:root.dark .home-hero__bg {
+	filter: brightness(1.4) saturate(1.15);
+}
+:root.dark .home-hero__shade {
+	background: linear-gradient(
+		to bottom,
+		rgb(0 0 0 / 0) 0%,
+		rgb(0 0 0 / 0.12) 28%,
+		rgb(0 0 0 / 0.4) 60%,
+		rgb(0 0 0 / 0.48) 100%
+	);
 }
 
 .home-hero__identity,
@@ -285,4 +300,12 @@
 	.home-hero__scroll {
 		animation: none;
 	}
+}
+
+/* 首页：Hero 负 margin 上顶盖住导航栏下方空隙。
+   同步补偿高度与内边距，保证内容位置不变、不被导航遮挡、不裁切溢出 */
+body.is-home .home-hero {
+	margin-top: -5.5rem;
+	min-height: calc(100svh + 5.5rem);
+	padding-top: calc(4.5rem + 5.5rem);
 }

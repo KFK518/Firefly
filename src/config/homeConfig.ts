@@ -55,13 +55,7 @@ export const homeConfig: HomeConfig = {
 	},
 
 	// 技能图标
-	skills: [
-		{ name: "Astro", icon: "simple-icons:astro", group: "Frontend" },
-		{ name: "TypeScript", icon: "simple-icons:typescript", group: "Language" },
-		{ name: "Tailwind CSS", icon: "simple-icons:tailwindcss", group: "Style" },
-		{ name: "Python", icon: "simple-icons:python", group: "Language" },
-		{ name: "Docker", icon: "simple-icons:docker", group: "DevOps" },
-	],
+	skills: [],
 
 	// 社交/联系方式（复用用户资料配置）
 	links: profileConfig.links,

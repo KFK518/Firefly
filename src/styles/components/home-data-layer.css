@@ -2,19 +2,21 @@
 .home-data-layer {
 	display: flex;
 	align-items: stretch;
-	padding: 2rem 0 3rem;
+	padding: 2rem 0.5rem 3rem;
 }
 
 @media (min-width: 768px) {
 	.home-data-layer {
 		/* 下半部分页面高度约为全屏的 75%-85% */
 		min-height: 80svh;
+		padding-left: 1rem;
+		padding-right: 1rem;
 	}
 }
 
 .home-data-layer__inner {
 	width: 100%;
-	max-width: 72rem;
+	max-width: 88rem;
 	margin: 0 auto;
 	display: flex;
 	flex-direction: column;
@@ -23,6 +25,7 @@
 .home-data-layer__title {
 	/* 左上角标题：大一点但不突兀，字号随布局缩放 */
 	text-align: left;
+	color: var(--primary);
 	margin: 0 0 1rem;
 	font-size: clamp(1.5rem, 2.6vw, 2.1rem);
 	font-weight: 800;

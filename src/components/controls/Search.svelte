@@ -9,8 +9,7 @@ import { FLOATING_PANEL_CLOSE_EVENT } from "@/utils/floating-panel-utils";
 import { url as formatUrl, getSearchUrl } from "@/utils/url-utils";
 
 // --- State ---
-let keywordDesktop = "";
-let keywordMobile = "";
+let keyword = "";
 let result: SearchResult[] = [];
 let isSearching = false;
 let initialized = false;
@@ -39,43 +38,37 @@ const requestPagefind = (): void => {
 	window.__loadPagefind?.();
 };
 
-const togglePanel = () => {
+const getPanel = (): HTMLElement | null =>
+	document.getElementById("search-panel");
+
+const togglePanel = (): void => {
 	requestPagefind();
-	document
-		.getElementById("search-panel")
-		?.classList.toggle("float-panel-closed");
+	const panel = getPanel();
+	if (!panel) return;
+	const willOpen = panel.classList.contains("float-panel-closed");
+	panel.classList.toggle("float-panel-closed");
+	if (willOpen) {
+		// 展开后聚焦输入框，方便直接输入
+		requestAnimationFrame(() => {
+			document.getElementById("search-input")?.focus();
+		});
+	} else {
+		keyword = "";
+		result = [];
+	}
 };
 
-const handleDesktopFocus = (event: FocusEvent): void => {
-	requestPagefind();
-
-	const input = event.currentTarget;
-	if (
-		input instanceof HTMLElement &&
-		input.hasAttribute("data-floating-panel-focus-return")
-	)
-		return;
-
-	search(keywordDesktop, true);
-};
-
-const setPanelVisibility = (show: boolean, isDesktop: boolean): void => {
-	const panel = document.getElementById("search-panel");
-	if (
-		!panel ||
-		(isDesktop && !keywordDesktop) ||
-		(!isDesktop && !keywordMobile)
-	)
-		return;
+const setPanelVisibility = (show: boolean): void => {
+	const panel = getPanel();
+	if (!panel || !keyword) return;
 	show
 		? panel.classList.remove("float-panel-closed")
 		: panel.classList.add("float-panel-closed");
 };
 
 const closeSearchPanel = (): void => {
-	document.getElementById("search-panel")?.classList.add("float-panel-closed");
-	keywordDesktop = "";
-	keywordMobile = "";
+	getPanel()?.classList.add("float-panel-closed");
+	keyword = "";
 	result = [];
 };
 
@@ -92,10 +85,10 @@ const handleResultClick = (event: Event, url: string): void => {
 };
 
 // --- Core Search Logic ---
-const search = async (keyword: string, isDesktop: boolean): Promise<void> => {
-	if (!keyword) {
+const search = async (kw: string): Promise<void> => {
+	if (!kw) {
 		cancelPendingSearch();
-		setPanelVisibility(false, isDesktop);
+		setPanelVisibility(false);
 		result = [];
 		return;
 	}
@@ -110,7 +103,7 @@ const search = async (keyword: string, isDesktop: boolean): Promise<void> => {
 			let searchResults: SearchResult[] = [];
 
 			if (import.meta.env.PROD && window.pagefind) {
-				const response = await window.pagefind.search(keyword);
+				const response = await window.pagefind.search(kw);
 				searchResults = await Promise.all(
 					response.results.map((item) => item.data()),
 				);
@@ -121,13 +114,13 @@ const search = async (keyword: string, isDesktop: boolean): Promise<void> => {
 			if (requestId !== searchRequestId) return;
 
 			result = searchResults;
-			setPanelVisibility(true, isDesktop);
+			setPanelVisibility(true);
 		} catch (error) {
 			if (requestId !== searchRequestId) return;
 
 			console.error("Search error:", error);
 			result = [];
-			setPanelVisibility(false, isDesktop);
+			setPanelVisibility(false);
 		} finally {
 			if (requestId === searchRequestId) {
 				isSearching = false;
@@ -138,10 +131,19 @@ const search = async (keyword: string, isDesktop: boolean): Promise<void> => {
 
 // --- Initialization onMount ---
 onMount(() => {
+	// 将面板挂到导航栏根节点：椭圆框的 backdrop-filter 会把绝对定位子元素的包含块
+	// 限制在椭圆框内部，导致弹窗出现在搜索图标下方而非导航栏中央。
+	// 挂到 #navbar 后，包含块变为定位的 #top-row，left-1/2 即可水平居中。
+	// 面板默认隐藏，挂载过程无可见跳动。
+	const panelHost = getPanel();
+	const navbarRoot = document.getElementById("navbar");
+	if (panelHost && navbarRoot && panelHost.parentElement !== navbarRoot) {
+		navbarRoot.appendChild(panelHost);
+	}
+
 	const initializePagefind = () => {
 		initialized = true;
-		if (keywordDesktop) search(keywordDesktop, true);
-		if (keywordMobile) search(keywordMobile, false);
+		if (keyword) search(keyword);
 	};
 
 	if (import.meta.env.DEV) {
@@ -162,76 +164,70 @@ onMount(() => {
 		}
 	}
 
-	const panel = document.getElementById("search-panel");
+	const panel = getPanel();
 	panel?.addEventListener(FLOATING_PANEL_CLOSE_EVENT, cancelPendingSearch);
+
+	// 点击页面空白处收起搜索面板
+	const handleDocumentClick = (event: MouseEvent): void => {
+		const p = getPanel();
+		if (!p || p.classList.contains("float-panel-closed")) return;
+		const target = event.target;
+		if (target instanceof Node && p.contains(target)) return;
+		const trigger = document.getElementById("search-switch");
+		if (trigger && target instanceof Node && trigger.contains(target)) return;
+		closeSearchPanel();
+	};
+	document.addEventListener("click", handleDocumentClick);
 
 	return () => {
 		panel?.removeEventListener(FLOATING_PANEL_CLOSE_EVENT, cancelPendingSearch);
 		document.removeEventListener("pagefindready", initializePagefind);
 		document.removeEventListener("pagefindloaderror", initializePagefind);
+		document.removeEventListener("click", handleDocumentClick);
 		cancelPendingSearch();
 	};
 });
 
 // --- Reactive Statements ---
-$: if (initialized && (keywordDesktop || keywordDesktop === "")) {
-	search(keywordDesktop, true);
-}
-$: if (initialized && (keywordMobile || keywordMobile === "")) {
-	search(keywordMobile, false);
+$: if (initialized) {
+	search(keyword);
 }
 </script>
 
-<!-- search bar for desktop view -->
-<div id="search-bar" class="hidden lg:flex transition-all items-center h-11 mr-2 rounded-lg
-      bg-black/4 hover:bg-black/6 focus-within:bg-black/6
-      dark:bg-white/5 dark:hover:bg-white/10 dark:focus-within:bg-white/10
-">
-    <Icon icon="material-symbols:search"
-          class="absolute text-[1.25rem] pointer-events-none ml-3 transition my-auto text-black/30 dark:text-white/30"></Icon>
-    <input id="search-input-desktop" placeholder="{i18n(I18nKey.search)}" bind:value={keywordDesktop}
-           aria-controls="search-panel" data-floating-panel-no-expanded
-           on:focus={handleDesktopFocus}
-           class="transition-all pl-10 text-sm bg-transparent outline-0
-         h-full w-40 active:w-60 focus:w-60 text-black/50 dark:text-white/50"
-    >
-</div>
-
-<!-- toggle btn for phone/tablet view -->
+<!-- 放大镜按钮：所有端共用，点击展开/收起搜索面板 -->
 <button on:click={togglePanel} aria-label="Search Panel" aria-controls="search-panel" aria-expanded="false" id="search-switch"
-		class="btn-plain scale-animation lg:hidden! rounded-lg w-9 h-9 md:w-11 md:h-11 active:scale-90">
+		class="btn-plain scale-animation rounded-lg w-9 h-9 md:w-11 md:h-11 active:scale-90">
     <Icon icon="material-symbols:search" class="text-[1.25rem]"></Icon>
 </button>
 
-<!-- search panel -->
-<div id="search-panel" class="float-panel float-panel-closed search-panel absolute md:w-120
-top-20 left-4 md:left-[unset] right-4 shadow-2xl rounded-2xl p-2"
-     data-floating-panel data-floating-panel-trigger="search-switch search-input-desktop" inert aria-hidden="true">
+<!-- 搜索面板：导航栏正下方居中弹出 -->
+<div id="search-panel" class="float-panel float-panel-closed search-panel absolute top-[clamp(6.5rem,17vh,11rem)] left-1/2 -translate-x-1/2 w-[min(88vw,20rem)] shadow-2xl rounded-2xl p-2"
+     data-floating-panel data-floating-panel-trigger="search-switch" inert aria-hidden="true">
 
-    <!-- search bar inside panel for phone/tablet -->
-    <div id="search-bar-inside" class="flex relative lg:hidden transition-all items-center h-11 rounded-xl
+    <!-- 面板内搜索输入框 -->
+    <div id="search-bar-inside" class="flex relative items-center h-10 rounded-xl
       bg-black/4 hover:bg-black/6 focus-within:bg-black/6
       dark:bg-white/5 dark:hover:bg-white/10 dark:focus-within:bg-white/10
   ">
         <Icon icon="material-symbols:search"
               class="absolute text-[1.25rem] pointer-events-none ml-3 transition my-auto text-black/30 dark:text-white/30"></Icon>
-        <input placeholder={i18n(I18nKey.search)} bind:value={keywordMobile}
+        <input id="search-input" placeholder={i18n(I18nKey.search)} bind:value={keyword}
                on:focus={requestPagefind}
                class="pl-10 absolute inset-0 text-sm bg-transparent outline-0
-               focus:w-60 text-black/50 dark:text-white/50"
+               text-black/50 dark:text-white/50"
         >
     </div>
 
     <!-- search results -->
     {#if isSearching}
-        <div class="transition first-of-type:mt-2 lg:first-of-type:mt-0 block rounded-xl text-lg px-3 py-2 text-50">
+        <div class="transition first-of-type:mt-2 block rounded-xl text-lg px-3 py-2 text-50">
             {i18n(I18nKey.searchLoading)}
         </div>
-    {:else if result.length > 0}
+    {:else if keyword && result.length > 0}
         {#each result.slice(0, 5) as item}
             <a href={item.url}
                on:click={(e) => handleResultClick(e, item.url)}
-               class="transition first-of-type:mt-2 lg:first-of-type:mt-0 group block
+               class="transition first-of-type:mt-2 group block
            rounded-xl text-lg px-3 py-2 hover:bg-(--btn-plain-bg-hover) active:bg-(--btn-plain-bg-active)">
                 <div class="transition text-90 inline-flex font-bold group-hover:text-(--primary)">
                     {@html item.meta.title}
@@ -259,22 +255,18 @@ top-20 left-4 md:left-[unset] right-4 shadow-2xl rounded-2xl p-2"
             </a>
         {/each}
         {#if result.length > 5}
-            <a href={getSearchUrl(keywordDesktop || keywordMobile)}
-               on:click={(e) => handleResultClick(e, getSearchUrl(keywordDesktop || keywordMobile))}
-               class="transition first-of-type:mt-2 lg:first-of-type:mt-0 group block rounded-xl text-lg px-3 py-2 hover:bg-(--btn-plain-bg-hover) active:bg-(--btn-plain-bg-active) text-(--primary) font-bold text-center">
+            <a href={getSearchUrl(keyword)}
+               on:click={(e) => handleResultClick(e, getSearchUrl(keyword))}
+               class="transition first-of-type:mt-2 group block rounded-xl text-lg px-3 py-2 hover:bg-(--btn-plain-bg-hover) active:bg-(--btn-plain-bg-active) text-(--primary) font-bold text-center">
                 <span class="inline-flex items-center">
                     {i18n(I18nKey.searchViewMore).replace('{count}', (result.length - 5).toString())}
                     <Icon icon="fa7-solid:arrow-right" class="transition text-[0.75rem] ml-1"></Icon>
                 </span>
             </a>
         {/if}
-    {:else if result.length === 0}
-        <div class="transition first-of-type:mt-2 lg:first-of-type:mt-0 block rounded-xl text-lg px-3 py-2 text-50">
+    {:else if keyword && result.length === 0}
+        <div class="transition first-of-type:mt-2 block rounded-xl text-lg px-3 py-2 text-50">
             {i18n(I18nKey.searchNoResults)}
-        </div>
-    {:else if keywordDesktop || keywordMobile}
-        <div class="transition first-of-type:mt-2 lg:first-of-type:mt-0 block rounded-xl text-lg px-3 py-2 text-50">
-            {i18n(I18nKey.searchTypeSomething)}
         </div>
     {/if}
 </div>
@@ -287,5 +279,13 @@ top-20 left-4 md:left-[unset] right-4 shadow-2xl rounded-2xl p-2"
     .search-panel {
         max-height: calc(100vh - 100px);
         overflow-y: auto;
+        /* 展开/收起过渡动画：淡入淡出 + 轻微上下滑动 */
+        transition:
+            opacity 0.22s ease,
+            translate 0.22s ease;
+    }
+
+    .search-panel.float-panel-closed {
+        --tw-translate-y: -0.75rem;
     }
 </style>

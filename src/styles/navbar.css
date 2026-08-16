@@ -342,3 +342,86 @@ body.wallpaper-transparent #navbar-wrapper #navbar[data-full-width="true"] > div
         display: none !important;
     }
 }
+
+
+/* ============================================
+ * 首页：全宽图片 + 三段悬浮椭圆导航
+ * 由 body.is-home / #navbar[data-is-home] 驱动，Swup 切页自动切换
+ * ============================================ */
+
+/* 顶部栏与主内容区在首页铺满全宽、贴顶 */
+body.is-home #top-row {
+	width: 100% !important;
+	max-width: none !important;
+	padding-inline: 0 !important;
+}
+
+/* 首页导航栏自身透明，只保留三个椭圆框 */
+#navbar[data-is-home="true"] > div {
+	background: transparent !important;
+	border: none !important;
+	border-radius: 0 !important;
+	box-shadow: none !important;
+	--navbar-surface-blur: 0px;
+	padding-left: 0.75rem;
+	padding-right: 0.75rem;
+}
+
+#navbar[data-is-home="true"] .navbar-grid {
+	max-width: none !important;
+	gap: 0.75rem;
+}
+
+/* 三个等高椭圆框，宽度随内容 */
+#navbar[data-is-home="true"] .navbar-oval {
+	display: flex;
+	align-items: center;
+	gap: 0.25rem;
+	height: 3.25rem;
+	padding: 0 1rem;
+	border-radius: 9999px;
+	border: 1px solid color-mix(in oklab, var(--line-divider) 55%, transparent);
+	background: color-mix(in oklab, var(--card-bg) 55%, transparent);
+	backdrop-filter: blur(14px) saturate(1.25);
+	-webkit-backdrop-filter: blur(14px) saturate(1.25);
+	box-shadow: 0 4px 24px rgb(0 0 0 / 0.14);
+}
+
+#navbar[data-is-home="true"] .navbar-oval--brand {
+	padding: 0 1.4rem;
+}
+
+#navbar[data-is-home="true"] .navbar-oval--brand .navbar-logo {
+	margin-right: 0.5rem;
+}
+
+#navbar[data-is-home="true"] .navbar-oval--links {
+	width: fit-content;
+	justify-self: center;
+	justify-content: center;
+	padding: 0 0.5rem;
+}
+
+#navbar[data-is-home="true"] .navbar-oval--actions {
+	justify-self: end;
+	padding: 0 0.5rem;
+}
+
+/* 椭圆内按钮弱化为透明，避免嵌套按钮感 */
+#navbar[data-is-home="true"] .navbar-oval .btn-plain {
+	background: transparent;
+	border: none;
+	box-shadow: none;
+	border-radius: 9999px;
+}
+
+/* 首页全宽：由 body.is-home 驱动，兼容 Swup 切页（避免 SSR 类名残留导致图片不铺满） */
+body.is-home .content-shell {
+	width: 100% !important;
+	max-width: none !important;
+}
+
+body.is-home #main-grid {
+	padding-left: 0 !important;
+	padding-right: 0 !important;
+}
