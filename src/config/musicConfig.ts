@@ -101,7 +101,7 @@ export const musicPlayerConfig: MusicPlayerConfig = {
 				artist: "Laufey",
 				url: "/assets/music/Laufey - From The Start.mp3",
 				cover: "/assets/music/cover/46a8938ce292014e2f83232cc45026c0.webp",
-				lrc: "/assets/music/lrc/Laufey - From The Start.lrc",
+				lrc: "/assets/music/lrc/From The Start - Laufey.lrc",
 			},
 		],
 	},
