@@ -96,6 +96,13 @@ export const musicPlayerConfig: MusicPlayerConfig = {
 				cover: "/assets/music/cover/f6f6c634e1271bfbf73e83a572270eac.webp",
 				lrc: "/assets/music/lrc/Josh Fudge - When She's Gone.lrc",
 			},
+			{
+				name: "From The Start",
+				artist: "Laufey",
+				url: "/assets/music/Laufey - From The Start.mp3",
+				cover: "/assets/music/cover/46a8938ce292014e2f83232cc45026c0.webp",
+				lrc: "/assets/music/lrc/Laufey - From The Start.lrc",
+			},
 		],
 	},
 
