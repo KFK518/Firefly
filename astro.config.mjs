@@ -132,7 +132,12 @@ export default defineConfig({
 			cache: true,
 			preload: true,
 			accessibility: true,
-			updateHead: true,
+			updateHead: {
+				awaitAssets: true,
+				// 保留旧页面的样式表/样式标签：head-plugin 默认会在替换 DOM 前移除新页面没有的
+				// 页面级 CSS 并等待新页 CSS 加载，真实网络下这段“无样式窗口”会让封面按原图尺寸闪现
+				persistTags: "link[rel=stylesheet], style",
+			},
 			updateBodyClass: false,
 			globalInstance: true,
 			// 滚动相关配置优化
