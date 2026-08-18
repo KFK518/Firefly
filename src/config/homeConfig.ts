@@ -48,10 +48,10 @@ export const homeConfig: HomeConfig = {
 		visitImage: "/assets/images/home/home-data-1.webp",
 		archiveImage: "/assets/images/home/home-data-2.webp",
 		pinnedImage: "/assets/images/panels/d1.webp",
-		latestImage: "/assets/images/home/home2.webp",
+		latestImage: "/assets/images/home/168102.webp",
 		categoriesImage: "/assets/images/panels/d3.webp",
 		tagsImage: "/assets/images/panels/d4.webp",
-		contactImage: "/assets/images/home/home-data-3.webp",
+		contactImage: "/assets/images/home/20240326bdn1kh.webp",
 	},
 
 	// 技能图标
