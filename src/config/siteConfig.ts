@@ -12,7 +12,7 @@ export const siteConfig: SiteConfig = {
 	subtitle: "wander",
 
 	// 站点 URL
-	site_url: "https://mistfield.cuteleaf.cn",
+	site_url: "https://260812.xyz/",
 
 	// 站点描述
 	description:
@@ -78,7 +78,7 @@ export const siteConfig: SiteConfig = {
 			type: "image",
 			value: "assets/images/logo/firefly-light.png",
 			valueDark: "assets/images/logo/firefly-dark.png",
-			alt: "🍀",
+			alt: "🐋",
 		},
 		// 导航栏标题
 		title: "MistField",
